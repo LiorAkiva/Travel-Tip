@@ -5,14 +5,15 @@ export const locService = {
   addLoc,
   saveToStorage,
   loadFromStorage,
+  deleteLoc
 };
 
 var gIdx = 1;
 const CACHE= 'locsCache';
 
-var locs = [
-  { id: gIdx++, name: "Greatplace", lat: 32.047104, lng: 34.832384, createdAt: Date.now() },
-  { id: gIdx++, name: "Neveragain", lat: 32.047201, lng: 34.832581, createdAt: Date.now() },
+const locs = [
+  { id: gIdx++, name: "Greatplace", lat: 32.047104, lng: 34.832384, createdAt: Date.now(), updatedAt: Date.now() },
+  { id: gIdx++, name: "Neveragain", lat: 32.047201, lng: 34.832581, createdAt: Date.now(), updatedAt: Date.now() },
 ];
 
 function getLocs() {
@@ -29,9 +30,14 @@ function getLocs() {
 
 function addLoc(locationName, pos) {
   let { lat, lng } = pos;
-  locs.push({ id: gIdx++, name: locationName, lat, lng, createdAt: Date.now() });
+  locs.push({ id: gIdx++, name: locationName, lat, lng, createdAt: Date.now(), updatedAt: Date.now() });
   storageService.save(CACHE, locs);
   return Promise.resolve(locs);
+}
+
+function deleteLoc(locId) {
+    const locIdx = locs.findIndex(loc => loc.id === locId);
+    locs.splice(locIdx, 1);
 }
 
 function saveToStorage(key, val) {
