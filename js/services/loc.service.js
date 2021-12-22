@@ -38,6 +38,7 @@ function addLoc(locationName, pos) {
 function deleteLoc(locId) {
     const locIdx = locs.findIndex(loc => loc.id === locId);
     locs.splice(locIdx, 1);
+    saveToStorage(CACHE, locs);
 }
 
 function saveToStorage(key, val) {

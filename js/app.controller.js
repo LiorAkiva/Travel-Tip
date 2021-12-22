@@ -4,7 +4,7 @@ import { mapService } from "./services/map.service.js";
 
 window.onload = onInit;
 window.onAddMarker = onAddMarker;
-window.onCopyLocation = onCopyLocation;
+window.onCopyLink = onCopyLink;
 window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
@@ -12,7 +12,8 @@ window.onchange = onGo;
 window.onGo = onGo;
 window.onRemoveLoc = onRemoveLoc;
 
-let gCurrLatLng = { lat: 32.0749831, lng: 34.9120554 }
+let gCurrLatLng = { lat: 32.0749831, lng: 34.9120554 };
+let gCurrCity;
 
 function onInit() {
     // document.querySelector('input[id=search]').addEventListener('change', onGo)
@@ -113,7 +114,7 @@ function onRemoveLoc(locId) {
 }
 
 
-function onCopyLocation() {
+function onCopyLink() {
     const link = `https://liorakiva.github.io/Travel-Tip/index.html?lat=${gCurrLatLng.lat}&lng=${gCurrLatLng.lng}`
     navigator.clipboard.writeText(link);
 }
