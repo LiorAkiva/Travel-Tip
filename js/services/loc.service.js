@@ -11,11 +11,15 @@ var gIdx = 1;
 const CACHE= 'locsCache';
 
 const locs = [
-  { id: gIdx++, name: "Greatplace", lat: 32.047104, lng: 34.832384 },
-  { id: gIdx++, name: "Neveragain", lat: 32.047201, lng: 34.832581 },
+  { id: gIdx++, name: "Greatplace", lat: 32.047104, lng: 34.832384, createdAt: Date.now() },
+  { id: gIdx++, name: "Neveragain", lat: 32.047201, lng: 34.832581, createdAt: Date.now() },
 ];
 
 function getLocs() {
+    locs = storageService.load(CACHE) || [];
+    if(locs){
+        return Promise.resolve(locs);
+    }
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve(locs);
@@ -25,7 +29,7 @@ function getLocs() {
 
 function addLoc(locationName, pos) {
   let { lat, lng } = pos;
-  locs.push({ id: gIdx++, name: locationName, lat, lng });
+  locs.push({ id: gIdx++, name: locationName, lat, lng, createdAt: Date.now() });
   storageService.save(CACHE, locs);
   return Promise.resolve(locs);
 }
