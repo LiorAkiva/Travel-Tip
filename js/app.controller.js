@@ -11,6 +11,7 @@ window.onGetUserPos = onGetUserPos;
 window.onchange = onGo;
 window.onGo = onGo;
 window.onRemoveLoc = onRemoveLoc;
+window.onGoLoc = onGoLoc;
 
 let gCurrLatLng = { lat: 32.0749831, lng: 34.9120554 };
 let gCurrCity;
@@ -23,8 +24,8 @@ function onInit() {
         })
         .then(() => {
             mapService.onMapClick((lat, lng) => {
-              onAddMarker(lat, lng);
               renderLocs();
+              onAddMarker(lat, lng);
             });
         })
         .catch(() => console.log('Error: cannot init map'));
@@ -53,10 +54,20 @@ function getPosition() {
   });
 }
 
-function onAddMarker(lat, lng, title) {
-    console.log(lat, lng)
-  mapService.addMarker({ lat, lng, title });
-}
+function onAddMarker() {
+  locService.getLocs().then(locs => {
+      locs.forEach(loc => {
+        var lat = loc.lat
+        var lng = loc.lng
+        var title = loc.name
+        mapService.addMarker({ lat, lng, title });
+      });
+    })
+ }
+
+
+
+
 
 function onGetLocs() {
   locService.getLocs().then((locs) => {
@@ -68,10 +79,10 @@ function onGetLocs() {
 function onGetUserPos() {
     getPosition()
         .then(pos => {
-            console.log('User position is:', pos.coords);
-            document.querySelector('.user-pos').innerText =
-                `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
-                mapService.panTo(pos.coords.latitude,pos.coords.longitude)
+          mapService.addMarker({ lat:pos.coords.latitude,lng:pos.coords.longitude })
+            console.log('User position is:', pos);
+            document.querySelector('.user-pos').innerText = 'Current location'
+            mapService.panTo(pos.coords.latitude,pos.coords.longitude)
         })
         .catch(err => {
             console.log('err!!!', err);
@@ -96,8 +107,8 @@ function renderLocs(){
         strhtml +=
         `<div class="loc-container">
             <div class="name">${loc.name}</div>
-            <button onclick="onGoLoc()" class="btn">GO</button>
-            <button onclick="onRemoveLoc()" class="btn">X</button>
+            <button onclick="onGoLoc(${loc.lat} , ${loc.lng})" class="btn btn-light">GO</button>
+            <button onclick="onRemoveLoc()" class="btn btn-light">X</button>
         </div>`
     });
     console.log(strhtml)
@@ -117,4 +128,9 @@ function onRemoveLoc(locId) {
 function onCopyLink() {
     const link = `https://liorakiva.github.io/Travel-Tip/index.html?lat=${gCurrLatLng.lat}&lng=${gCurrLatLng.lng}`
     navigator.clipboard.writeText(link);
+}
+
+function onGoLoc(lat,lng){
+  console.log(lat,lng)
+  mapService.panTo(lat, lng)
 }

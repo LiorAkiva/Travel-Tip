@@ -12,8 +12,7 @@ var gIdx = 1;
 const CACHE= 'locsCache';
 
 var locs = [
-  // { id: gIdx++, name: "Greatplace", lat: 32.047104, lng: 34.832384, createdAt: Date.now(), updatedAt: Date.now() },
-  // { id: gIdx++, name: "Neveragain", lat: 32.047201, lng: 34.832581, createdAt: Date.now(), updatedAt: Date.now() },
+  { id: gIdx++, name: "Tel aviv", lat: 32.085300, lng: 34.781769, createdAt: Date.now(), updatedAt: Date.now() },
 ];
 
 function getLocs() {
