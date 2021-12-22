@@ -16,7 +16,7 @@ function onInit() {
             console.log('Map is ready');
         })
         .then(() => {
-            mapService.onMapClick(onGetLocs);
+            mapService.onMapClick(onAddMarker);
         })
         .catch(() => console.log('Error: cannot init map'));
 }

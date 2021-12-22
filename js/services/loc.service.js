@@ -1,3 +1,5 @@
+import { storageService } from "./storage.service.js"
+
 export const locService = {
   getLocs,
   addLoc,
@@ -6,6 +8,7 @@ export const locService = {
 };
 
 var gIdx = 1;
+const CACHE= 'locsCache';
 
 const locs = [
   { id: gIdx++, name: "Greatplace", lat: 32.047104, lng: 34.832384 },
@@ -23,7 +26,7 @@ function getLocs() {
 function addLoc(locationName, pos) {
   let { lat, lng } = pos;
   locs.push({ id: gIdx++, name: locationName, lat, lng });
-  
+  storageService.save(CACHE, locs);
   return Promise.resolve(locs);
 }
 
