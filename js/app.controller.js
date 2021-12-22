@@ -56,11 +56,9 @@ function onGo(ev){
           }
         }, 1000)
     })
-    // askWeather(serchText).then(data =>{
-    //     renderWeather(data)
-    // })
    
 }
+
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
 function getPosition() {
@@ -116,7 +114,6 @@ function onPanTo() {
 function renderLocs(shouldAddPointers = false){
   locService.getLocs().then(locs => {
     var strhtml = '';
-    console.log('locs', locs)
     locs.forEach(loc => {
       if (shouldAddPointers) {
         mapService.addMarker({ lat:loc.lat, lng:loc.lng});
@@ -130,7 +127,6 @@ function renderLocs(shouldAddPointers = false){
           </div>
       </div>`
     });
-    console.log(strhtml)
     document.querySelector('.saved-location-container').innerHTML = strhtml
   })
 }
@@ -153,19 +149,21 @@ function onGoLoc(lat,lng){
   mapService.panTo(lat, lng)
 }
 function renderWeather(data){
-    console.log(data)
+    let icon;
     let location = data.name;
     let country = data.sys.country
     let {temp,feels_like, humidity, temp_max, temp_min} = data.main;
-    let text = temp.toString();
-    console.log(temp_max)
+    if(temp < 15) icon = '❄';
+    else if(temp < 26) icon = '🌤';
+    else if(temp > 26) icon = '☀'
+
     const elWeather = document.querySelector('.weather-container span');
     elWeather.innerHTML += 
     `<div class="weather-items">
     <div>Location: ${location},${country}</div>
     </div>
     <div class="weather-items">
-    <div>temp: ${temp}°C</div>
+    <div>Temp: ${temp}°C</div>
     </div>
     <div class="weather-items">
     <div>min temp: ${temp_min}</div>
@@ -174,16 +172,12 @@ function renderWeather(data){
     <div>max temp: ${temp_max}</div>
     </div>
     <div class="weather-items">
-    <div>feels like: ${feels_like}</div>
+    <div>Feels like: ${feels_like}</div>
     </div>
     <div class="weather-items">
     <div>Humidity: ${humidity}%</div>
     </div>
     <div class="weather-items">
-    <div>${checkWeather()}</div>
+    <div>${icon}</div>
     </div>`
-}
-
-function checkWeather(data){
-    
 }

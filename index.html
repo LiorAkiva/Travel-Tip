@@ -20,14 +20,14 @@
             <button onclick="onGetUserPos()" type="button" class="btn btn-light">My Location</button>
         </div>
         <div class="curr-location">
-            <p>You are at: <span class="user-pos">kkk</span></p>
-            <button onclick="onCopyLink()" class="btn btn-light">Copy Github link</button>
+            <p>You are at: <span class="user-pos"></span></p>
+            <button onclick="onCopyLink()" class="btn btn-light">Copy Location</button>
         </div>
     </header>
     <section>
-         <div class="side-info">
-            <div class="weather-container" style="width: 100%; margin: 5%; padding: 0px;">Weather today:<span></span></div>
-            <div class="saved-location-container" style="width: 100%; margin: 5%;">
+        <div class="side-info">
+            <div class="weather-container" style="width: 100%; height: 70%; margin: 5%; padding: 0px;">Weather today:<span></span></div>
+            <div class="saved-location-container" style="width: 100%; height: 30%; margin: 5%;">
                 <p>Location Table: <span class="locs"></span></p>
             </div>
         </div>
@@ -37,10 +37,6 @@
     <button onclick="onGetUserPos()" class="btn-user-pos">Get User Position</button>
     <button onclick="onGetLocs()" class="btn-get-locs">Get Locations</button>
     <button onclick="onPanTo()"class="btn-pan">Pan Map to Tokyo</button> -->
-
-    
-    
-    
     <script src="lib/axios.js"></script>
     <script type="module" src="js/app.controller.js"></script>
     <script src="lib/axios.js"></script>

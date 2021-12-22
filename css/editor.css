@@ -1,3 +1,5 @@
+
+
 body{
     background-color: #aadaff;
     height: 100%;
@@ -25,11 +27,18 @@ section{
 }
 
 
-div.weather-container{
+.weather-container{
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 0 16px 0 rgb(0 0 0 / 20%);
     margin: 5%;
+    justify-content: center;
+    text-align: center;
+    
+}
+
+.weather-items{
+    padding: 6px
 }
 
 .saved-location-container{
@@ -77,6 +86,9 @@ div.name{
     display: flex;
 }
 
+.btn:hover{
+    transform: scale(1.1);
+}
 
 @media only screen and (max-width:768px){
     .loc-container{
@@ -89,5 +101,28 @@ div.name{
 
     .curr-location {
         margin-top: 16px;
+    }
+
+    .weather-items{
+        padding: 5px;
+        font-size:14px;
+    }
+}
+@media  (max-width:360px){
+    .loc-container{
+        flex-direction: column;
+    }
+
+    div.name{
+        font-size: 14px;
+    }
+
+    .curr-location {
+        margin-top: 16px;
+    }
+
+    .weather-items{
+        padding: 3.5px;
+        font-size:14px;
     }
 }

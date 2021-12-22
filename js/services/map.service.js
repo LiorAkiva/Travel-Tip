@@ -14,7 +14,7 @@ export const mapService = {
 
 var gMap;
 
-function initMap(lat = 32.085300, lng = 34.781769 , title = 'Tel Aviv') {
+function initMap(lat = 32.0749831, lng = 34.9120554, title = 'Tel Aviv') {
     console.log('InitMap');
     return _connectGoogleApi()
         .then(() => {
@@ -34,15 +34,17 @@ function addMarker(loc, title) {
     var marker = new google.maps.Marker({
         position: loc,
         map: gMap,
-        title: 'Hello World!'
+        title,
+        animation: google.maps.Animation.DROP,
+
     });
     return marker;
 }
 
+
 function updateCurrLocTitle(title){
     console.log(title)
     document.querySelector('.user-pos').innerText = title
-    
 }
 
 function panTo(lat, lng) {

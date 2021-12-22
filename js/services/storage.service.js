@@ -9,7 +9,7 @@ function saveToStorage(key, val) {
   
   function loadFromStorage(key) {
     var val = localStorage.getItem(key);
-    console.log("the userDB is", JSON.parse(val));
+    // console.log("the userDB is", JSON.parse(val));
     return JSON.parse(val);
   }
   
