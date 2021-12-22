@@ -52,7 +52,6 @@ function onGo(ev){
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
 function getPosition() {
-  console.log("Getting Pos");
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(resolve, reject);
   });
@@ -98,7 +97,6 @@ function onGetUserPos() {
 
 
 function onPanTo() {
-  console.log("Panning the Map");
   mapService.panTo(35.6895, 139.6917);
 }
 
@@ -135,14 +133,40 @@ function onCopyLink() {
 }
 
 function onGoLoc(lat,lng){
-  console.log(lat,lng)
   mapService.panTo(lat, lng)
 }
 function renderWeather(data){
-    let temp = data.main.temp;
+    console.log(data)
+    let location = data.name;
+    let country = data.sys.country
+    let {temp,feels_like, humidity, temp_max, temp_min} = data.main;
     let text = temp.toString();
-    console.log(data.main.temp)
+    console.log(temp_max)
     const elWeather = document.querySelector('.weather-container span');
-    elWeather.innerHTML = text + '°C';
+    elWeather.innerHTML += 
+    `<div class="weather-items">
+    <div>Location: ${location},${country}</div>
+    </div>
+    <div class="weather-items">
+    <div>temp: ${temp}°C</div>
+    </div>
+    <div class="weather-items">
+    <div>min temp: ${temp_min}</div>
+    </div>
+    <div class="weather-items">
+    <div>max temp: ${temp_max}</div>
+    </div>
+    <div class="weather-items">
+    <div>feels like: ${feels_like}</div>
+    </div>
+    <div class="weather-items">
+    <div>Humidity: ${humidity}%</div>
+    </div>
+    <div class="weather-items">
+    <div>${checkWeather()}</div>
+    </div>`
 }
 
+function checkWeather(data){
+    
+}
