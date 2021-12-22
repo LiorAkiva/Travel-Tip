@@ -44,8 +44,9 @@ function getPosition() {
   });
 }
 
-function onAddMarker() {
-  mapService.addMarker({ lat, lng });
+function onAddMarker(lat, lng, title) {
+    console.log(lat, lng)
+  mapService.addMarker({ lat, lng, title });
 }
 
 function onGetLocs() {

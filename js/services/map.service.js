@@ -27,7 +27,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
         })
 }
 
-function addMarker(loc) {
+function addMarker(loc, title) {
     var marker = new google.maps.Marker({
         position: loc,
         map: gMap,
@@ -60,13 +60,13 @@ function _connectGoogleApi() {
 function onMapClick(onSuccess) {
     gMap.addListener("click", ev => {
       const pos = ev.latLng.toJSON();
+      panTo(pos.lat, pos.lng);
       let canSave = confirm("Would you like to save this location?");
       if (canSave) {
-        let locName = prompt("Name this location");
-        if (locName) {
+          let locName = prompt("Name this location");
+          if (locName) {
           locService.addLoc(locName, pos);
-          panTo(pos.lat, pos.lng, locName);
-          onSuccess();
+          onSuccess(pos.lat, pos.lng);
         }
       }
     });
