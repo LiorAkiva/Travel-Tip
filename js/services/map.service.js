@@ -65,8 +65,8 @@ function onMapClick(onSuccess) {
           let locName = prompt("Name this location");
           if (locName) {
             panTo(pos.lat, pos.lng, locName);
-          locService.addLoc(locName, pos);
-          onSuccess(pos.lat, pos.lng);
+            locService.addLoc(locName, pos);
+            onSuccess(pos.lat, pos.lng);
         }
       }
     });

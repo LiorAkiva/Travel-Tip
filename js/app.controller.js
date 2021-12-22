@@ -1,6 +1,7 @@
 import { locService } from "./services/loc.service.js";
 import { mapService } from "./services/map.service.js";
 
+
 window.onload = onInit;
 window.onAddMarker = onAddMarker;
 window.onCopyLink = onCopyLink;
@@ -20,7 +21,10 @@ function onInit() {
             console.log('Map is ready');
         })
         .then(() => {
-            mapService.onMapClick(onAddMarker);
+            mapService.onMapClick((lat, lng) => {
+              onAddMarker(lat, lng);
+              renderLocs();
+            });
         })
         .catch(() => console.log('Error: cannot init map'));
 }
@@ -83,22 +87,23 @@ function onPanTo() {
 }
 
 
-function renderLocs(locs){
-  storageService.load(CACHE)
-  var strhtml = '';
-  console.log('locs', locs)
-  locs.forEach(loc => {
-      strhtml +=
-      `<div class="loc-container">
-          <div class="name">${loc.name}</div>
-          <button onclick="onGoLoc" class="btn">GO</button>
-          <button onclick="onRemoveLoc" class="btn">X</button>
-       </div>`
-  });
-  console.log(strhtml)
-  document.querySelector('.saved-location-container').innerHTML = strhtml
+function renderLocs(){
+  locService.getLocs().then(locs => {
+    var strhtml = '';
+    console.log('locs', locs)
+    locs.forEach(loc => {
+        strhtml +=
+        `<div class="loc-container">
+            <div class="name">${loc.name}</div>
+            <button onclick="onGoLoc" class="btn">GO</button>
+            <button onclick="onRemoveLoc" class="btn">X</button>
+        </div>`
+    });
+    console.log(strhtml)
+    document.querySelector('.saved-location-container').innerHTML = strhtml
+  })
 }
-
+  
 // TODO: add delete button
 function onDeleteLoc(locId) {
     const canDelete = confirm('Delete this location?');
