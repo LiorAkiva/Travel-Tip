@@ -1,5 +1,7 @@
+
 export const locService = {
-    getLocs
+    getLocs,
+    addLoc
 }
 
 
@@ -17,3 +19,8 @@ function getLocs() {
 }
 
 
+function addLoc(locationName, pos){
+    let {lat, lng} = pos;
+    locs.push({name: locationName, lat, lng});
+    return Promise.resolve(locs);
+}

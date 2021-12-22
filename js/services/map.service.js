@@ -1,9 +1,11 @@
+import { locService } from "./loc.service.js";
 
 
 export const mapService = {
     initMap,
     addMarker,
-    panTo
+    panTo,
+    onMapClick
 }
 
 var gMap;
@@ -22,26 +24,27 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
         })
 }
 
-function addMarker(loc) {
+function addMarker(loc, title) {
     var marker = new google.maps.Marker({
         position: loc,
         map: gMap,
-        title: 'Hello World!'
+        title
     });
     return marker;
 }
 
-function panTo(lat, lng) {
+function panTo(lat, lng, title) {
     var laLatLng = new google.maps.LatLng(lat, lng);
     gMap.panTo(laLatLng);
-    console.log('liat')
+    addMarker(laLatLng, title)
+
 }
 
 
 
 function _connectGoogleApi() {
     if (window.google) return Promise.resolve()
-    const API_KEY = 'AIzaSyCuK9aoRAmaj-w7I8tKFEB3tM66yzfXOfM&callback=mapReady'; //TODO: Enter your API Key
+    const API_KEY = 'AIzaSyCuK9aoRAmaj-w7I8tKFEB3tM66yzfXOfM'; //TODO: Enter your API Key
     var elGoogleApi = document.createElement('script');
     elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`;
     elGoogleApi.async = true;
@@ -53,3 +56,14 @@ function _connectGoogleApi() {
     })
 }
 
+function onMapClick(onSuccess){
+    gMap.addListener('click', function(ev) {
+        let locationName = prompt('Name of selected location:');
+        const pos = ev.lating.toJSON();
+        if(locationName) {
+            locService.addLoc(locationName, pos);
+            panTo(pos.lat, pos.lng, locationName);
+            onSuccess();
+        }
+    });
+}
