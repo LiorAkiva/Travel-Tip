@@ -10,7 +10,7 @@ export const locService = {
 var gIdx = 1;
 const CACHE= 'locsCache';
 
-const locs = [
+var locs = [
   { id: gIdx++, name: "Greatplace", lat: 32.047104, lng: 34.832384, createdAt: Date.now() },
   { id: gIdx++, name: "Neveragain", lat: 32.047201, lng: 34.832581, createdAt: Date.now() },
 ];

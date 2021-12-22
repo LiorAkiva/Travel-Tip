@@ -66,7 +66,7 @@ function onMapClick(onSuccess) {
         if (locName) {
           locService.addLoc(locName, pos);
           panTo(pos.lat, pos.lng, locName);
-          onSuccess();
+          onSuccess(pos.lat, pos.lng);
         }
       }
     });
