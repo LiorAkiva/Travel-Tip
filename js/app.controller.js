@@ -3,11 +3,14 @@ import { mapService } from "./services/map.service.js";
 
 window.onload = onInit;
 window.onAddMarker = onAddMarker;
+window.onCopyLocation = onCopyLocation;
 window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
 window.onchange = onGo;
 window.onGo = onGo;
+
+let gCurrLatLng = { lat: 32.0749831, lng: 34.9120554 }
 
 function onInit() {
     // document.querySelector('input[id=search]').addEventListener('change', onGo)
@@ -93,4 +96,18 @@ function renderLocs(locs){
   });
   console.log(strhtml)
   document.querySelector('.saved-location-container').innerHTML = strhtml
+}
+
+// TODO: add delete button
+function onDeleteLoc(locId) {
+    const canDelete = confirm('Delete this location?');
+    if (!canDelete) return;
+    locService.deleteLoc(locId);
+    renderLocs();
+}
+
+
+function onCopyLocation() {
+    const link = `https://liorakiva.github.io/Travel-Tip/index.html?lat=${gCurrLatLng.lat}&lng=${gCurrLatLng.lng}`
+    navigator.clipboard.writeText(link);
 }

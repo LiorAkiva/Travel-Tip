@@ -60,11 +60,11 @@ function _connectGoogleApi() {
 function onMapClick(onSuccess) {
     gMap.addListener("click", ev => {
       const pos = ev.latLng.toJSON();
-      panTo(pos.lat, pos.lng);
       let canSave = confirm("Would you like to save this location?");
       if (canSave) {
           let locName = prompt("Name this location");
           if (locName) {
+            panTo(pos.lat, pos.lng, locName);
           locService.addLoc(locName, pos);
           onSuccess(pos.lat, pos.lng);
         }
