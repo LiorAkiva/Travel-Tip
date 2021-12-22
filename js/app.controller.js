@@ -10,6 +10,7 @@ window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
 window.onchange = onGo;
 window.onGo = onGo;
+window.onRemoveLoc = onRemoveLoc;
 
 let gCurrLatLng = { lat: 32.0749831, lng: 34.9120554 }
 
@@ -94,8 +95,8 @@ function renderLocs(){
         strhtml +=
         `<div class="loc-container">
             <div class="name">${loc.name}</div>
-            <button onclick="onGoLoc" class="btn">GO</button>
-            <button onclick="onRemoveLoc" class="btn">X</button>
+            <button onclick="onGoLoc()" class="btn">GO</button>
+            <button onclick="onRemoveLoc()" class="btn">X</button>
         </div>`
     });
     console.log(strhtml)
@@ -104,7 +105,7 @@ function renderLocs(){
 }
   
 // TODO: add delete button
-function onDeleteLoc(locId) {
+function onRemoveLoc(locId) {
     const canDelete = confirm('Delete this location?');
     if (!canDelete) return;
     locService.deleteLoc(locId);

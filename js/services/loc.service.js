@@ -11,9 +11,9 @@ export const locService = {
 var gIdx = 1;
 const CACHE= 'locsCache';
 
-const locs = [
-  { id: gIdx++, name: "Greatplace", lat: 32.047104, lng: 34.832384, createdAt: Date.now(), updatedAt: Date.now() },
-  { id: gIdx++, name: "Neveragain", lat: 32.047201, lng: 34.832581, createdAt: Date.now(), updatedAt: Date.now() },
+var locs = [
+  // { id: gIdx++, name: "Greatplace", lat: 32.047104, lng: 34.832384, createdAt: Date.now(), updatedAt: Date.now() },
+  // { id: gIdx++, name: "Neveragain", lat: 32.047201, lng: 34.832581, createdAt: Date.now(), updatedAt: Date.now() },
 ];
 
 function getLocs() {
