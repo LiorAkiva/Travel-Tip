@@ -1,9 +1,29 @@
 
 
+
+function getLocationData(serchText){
+    return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${serchText}&key=AIzaSyDRSjfskUcII98LZQXzMblQX_hnBhcX26k`)
+        .then(res => res.data)
+        .catch(err=>{
+            console.log('Cannot get data' , err);
+            throw err
+        })
+}
+
+
+function panTo(lat,lng) {
+    console.log(lat,lng)
+    var laLatLng = new google.maps.LatLng(lat, lng);
+    gMap.panTo(laLatLng);
+    
+}
+
+
 export const mapService = {
     initMap,
     addMarker,
-    panTo
+    panTo,
+    getLocationData
 }
 
 var gMap;
@@ -31,17 +51,15 @@ function addMarker(loc) {
     return marker;
 }
 
-function panTo(lat, lng) {
-    var laLatLng = new google.maps.LatLng(lat, lng);
-    gMap.panTo(laLatLng);
-    console.log('liat')
-}
+
+
 
 
 
 function _connectGoogleApi() {
     if (window.google) return Promise.resolve()
-    const API_KEY = 'AIzaSyCuK9aoRAmaj-w7I8tKFEB3tM66yzfXOfM&callback=mapReady'; //TODO: Enter your API Key
+    
+    const API_KEY = 'AIzaSyDRSjfskUcII98LZQXzMblQX_hnBhcX26k'; //TODO: Enter your API Key
     var elGoogleApi = document.createElement('script');
     elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`;
     elGoogleApi.async = true;

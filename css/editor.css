@@ -1,0 +1,24 @@
+body{
+    box-sizing: border-box;
+}
+
+
+section{
+    display: flex;
+    margin-bottom: 5%;
+}
+
+.side-info{
+    width: 30%;
+    margin-right: 5%;
+    height: 400px;
+}
+
+
+.weather-container{
+    background-color: silver;
+}
+
+.saved-location-container{
+    background-color: blue;
+}
