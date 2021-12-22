@@ -66,15 +66,7 @@ function _connectGoogleApi() {
         elGoogleApi.onerror = () => reject('Google script failed to load')
     })
 }
-function onMapClick(){
-    gMap.addListener('click', function(ev) {
-        // let locationName = prompt('Name of selected location:');
-        const pos = ev.latLng.toJSON();
-        if(pos) {
-            panTo(pos.lat, pos.lng);
-        }
-    });
-}
+
 
 function onMapClick(onSuccess) {
     gMap.addListener("click", ev => {
