@@ -1,4 +1,5 @@
 import { locService } from "./loc.service.js";
+import { weatherService } from "./weather.service.js";
 
 
 

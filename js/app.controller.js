@@ -1,5 +1,6 @@
 import { locService } from "./services/loc.service.js";
 import { mapService } from "./services/map.service.js";
+import { weatherService } from "./services/weather.service.js";
 
 
 window.onload = onInit;
@@ -19,16 +20,19 @@ let gCurrCity;
 function onInit() {
     // document.querySelector('input[id=search]').addEventListener('change', onGo)
     mapService.initMap()
-        .then(() => {
-            console.log('Map is ready');
-        })
-        .then(() => {
-            mapService.onMapClick((lat, lng) => {
-              renderLocs();
-              onAddMarker(lat, lng);
-            });
-        })
-        .catch(() => console.log('Error: cannot init map'));
+    .then(() => {
+        console.log('Map is ready');
+    })
+    .then(() => {
+        mapService.onMapClick((lat, lng) => {
+            weatherService.getWeather(renderWeather, lat, lng)
+            renderLocs();
+            onAddMarker(lat, lng);
+        });
+        weatherService.getWeather(renderWeather, gCurrLatLng.lat, gCurrLatLng.lng)
+    })
+    .catch(() => console.log('Error: cannot init map'));
+    
 }
 
 
@@ -134,3 +138,11 @@ function onGoLoc(lat,lng){
   console.log(lat,lng)
   mapService.panTo(lat, lng)
 }
+function renderWeather(data){
+    let temp = data.main.temp;
+    let text = temp.toString();
+    console.log(data.main.temp)
+    const elWeather = document.querySelector('.weather-container span');
+    elWeather.innerHTML = text + '°C';
+}
+
