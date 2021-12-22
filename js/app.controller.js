@@ -77,3 +77,20 @@ function onPanTo() {
   console.log("Panning the Map");
   mapService.panTo(35.6895, 139.6917);
 }
+
+
+function renderLocs(locs){
+  storageService.load(CACHE)
+  var strhtml = '';
+  console.log('locs', locs)
+  locs.forEach(loc => {
+      strhtml +=
+      `<div class="loc-container">
+          <div class="name">${loc.name}</div>
+          <button onclick="onGoLoc" class="btn">GO</button>
+          <button onclick="onRemoveLoc" class="btn">X</button>
+       </div>`
+  });
+  console.log(strhtml)
+  document.querySelector('.saved-location-container').innerHTML = strhtml
+}
