@@ -13,7 +13,7 @@ function onInit() {
             console.log('Map is ready');
         })
         .then(() => {
-            mapService.onMapClick(onAddMarker);
+            mapService.onMapClick(onGetLocs);
         })
         .catch(() => console.log('Error: cannot init map'));
 }

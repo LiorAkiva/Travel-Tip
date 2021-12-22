@@ -58,8 +58,9 @@ function _connectGoogleApi() {
 
 function onMapClick(onSuccess){
     gMap.addListener('click', function(ev) {
-        let locationName = prompt('Name of selected location:');
+        // let locationName = prompt('Name of selected location:');
         const pos = ev.lating.toJSON();
+        console.log(pos)
         if(locationName) {
             locService.addLoc(locationName, pos);
             panTo(pos.lat, pos.lng, locationName);
