@@ -15,6 +15,9 @@ function onInit() {
         .then(() => {
             console.log('Map is ready');
         })
+        .then(() => {
+            mapService.onMapClick(onGetLocs);
+        })
         .catch(() => console.log('Error: cannot init map'));
 }
 
@@ -42,8 +45,7 @@ function getPosition() {
 }
 
 function onAddMarker() {
-    console.log('Adding a marker');
-    mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 });
+    mapService.addMarker({ lat, lng });
 }
 
 function onGetLocs() {
@@ -75,3 +77,4 @@ function onPanTo() {
     console.log('Panning the Map');
     mapService.panTo(35.6895, 139.6917);
 }
+
