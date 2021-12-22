@@ -3,15 +3,16 @@ import { storageService } from "./storage.service.js"
 export const locService = {
   getLocs,
   addLoc,
+  saveToStorage,
+  loadFromStorage,
   deleteLoc
 };
 
 var gIdx = 1;
 const CACHE= 'locsCache';
 
-const locs = [
-  { id: gIdx++, name: "Greatplace", lat: 32.047104, lng: 34.832384, createdAt: Date.now(), updatedAt: Date.now() },
-  { id: gIdx++, name: "Neveragain", lat: 32.047201, lng: 34.832581, createdAt: Date.now(), updatedAt: Date.now() },
+var locs = [
+  { id: gIdx++, name: "Tel aviv", lat: 32.085300, lng: 34.781769, createdAt: Date.now(), updatedAt: Date.now() },
 ];
 
 function getLocs() {
@@ -36,8 +37,15 @@ function addLoc(locationName, pos) {
 function deleteLoc(locId) {
     const locIdx = locs.findIndex(loc => loc.id === locId);
     locs.splice(locIdx, 1);
-    storageService.save(CACHE, locs);
-
+    saveToStorage(CACHE, locs);
 }
 
+function saveToStorage(key, val) {
+  localStorage.setItem(key, JSON.stringify(val));
+}
 
+function loadFromStorage(key) {
+  var val = localStorage.getItem(key);
+  console.log("the userDB is", JSON.parse(val));
+  return JSON.parse(val);
+}
