@@ -1,5 +1,6 @@
 import { locService } from "./services/loc.service.js";
 import { mapService } from "./services/map.service.js";
+import { weatherService } from "./services/weather.service.js";
 
 
 window.onload = onInit;
@@ -17,16 +18,19 @@ let gCurrCity;
 function onInit() {
     // document.querySelector('input[id=search]').addEventListener('change', onGo)
     mapService.initMap()
-        .then(() => {
-            console.log('Map is ready');
-        })
-        .then(() => {
-            mapService.onMapClick((lat, lng) => {
-              onAddMarker(lat, lng);
-              renderLocs();
-            });
-        })
-        .catch(() => console.log('Error: cannot init map'));
+    .then(() => {
+        console.log('Map is ready');
+    })
+    .then(() => {
+        mapService.onMapClick((lat, lng) => {
+            weatherService.getWeather(renderWeather, lat, lng)
+            onAddMarker(lat, lng);
+            renderLocs();
+        });
+        weatherService.getWeather(renderWeather, gCurrLatLng.lat, gCurrLatLng.lng)
+    })
+    .catch(() => console.log('Error: cannot init map'));
+    
 }
 
 
@@ -117,3 +121,12 @@ function onCopyLink() {
     const link = `https://liorakiva.github.io/Travel-Tip/index.html?lat=${gCurrLatLng.lat}&lng=${gCurrLatLng.lng}`
     navigator.clipboard.writeText(link);
 }
+
+function renderWeather(data){
+    let temp = data.main.temp;
+    let text = temp.toString();
+    console.log(data.main.temp)
+    const elWeather = document.querySelector('.weather-container span');
+    elWeather.innerHTML = text + '°C';
+}
+
