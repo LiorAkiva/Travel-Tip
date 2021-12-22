@@ -59,3 +59,35 @@ p{
     padding-top: 10px;
 }
 
+.loc-container{
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+div.name{
+    font-size: 20px;
+    width: 80%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.small-buttons{
+    display: flex;
+}
+
+
+@media only screen and (max-width:768px){
+    .loc-container{
+        flex-direction: column;
+    }
+
+    div.name{
+        font-size: 14px;
+    }
+
+    .curr-location {
+        margin-top: 16px;
+    }
+}

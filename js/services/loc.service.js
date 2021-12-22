@@ -10,7 +10,7 @@ var gIdx = 1;
 const CACHE= 'locsCache';
 
 var locs = [
-  { id: gIdx++, name: "Tel aviv", lat: 32.085300, lng: 34.781769, createdAt: Date.now(), updatedAt: Date.now() },
+  // { id: gIdx++, name: "Tel aviv", lat: 32.085300, lng: 34.781769, createdAt: Date.now(), updatedAt: Date.now() },
 ];
 
 function getLocs() {

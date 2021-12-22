@@ -24,12 +24,13 @@ function onInit() {
         console.log('Map is ready');
     })
     .then(() => {
-        mapService.onMapClick((lat, lng) => {
-            weatherService.getWeather(renderWeather, lat, lng)
-            renderLocs();
-            onAddMarker(lat, lng);
-        });
-        weatherService.getWeather(renderWeather, gCurrLatLng.lat, gCurrLatLng.lng)
+      renderLocs(true)
+      mapService.onMapClick((lat, lng) => {
+          weatherService.getWeather(renderWeather, lat, lng)
+          renderLocs();
+          onAddMarker(lat, lng);
+      });
+      weatherService.getWeather(renderWeather, gCurrLatLng.lat, gCurrLatLng.lng)
     })
     .catch(() => console.log('Error: cannot init map'));
     
@@ -37,12 +38,23 @@ function onInit() {
 
 
 function onGo(ev){
-    const serchText = document.querySelector('#search').value
-    console.log(serchText)
-    mapService.getLocationData(serchText).then(data =>{
+    const searchText = document.querySelector('#search').value
+    console.log(searchText)
+    mapService.getLocationData(searchText).then(data =>{
         var lat = data.results[0].geometry.location.lat
         var lng = data.results[0].geometry.location.lng
+        document.querySelector('.user-pos').innerText = searchText
         mapService.panTo(lat,lng)
+
+        // Timeout to let the map update before the prompt
+        setTimeout(() => {
+          let locName = prompt("Name this location");
+          if (locName) {
+            locService.addLoc(locName, { lat, lng });
+            renderLocs();
+            mapService.addMarker({ lat,lng })
+          }
+        }, 1000)
     })
     // askWeather(serchText).then(data =>{
     //     renderWeather(data)
@@ -82,7 +94,7 @@ function onGetLocs() {
 function onGetUserPos() {
     getPosition()
         .then(pos => {
-          mapService.addMarker({ lat:pos.coords.latitude,lng:pos.coords.longitude })
+            mapService.addMarker({ lat:pos.coords.latitude,lng:pos.coords.longitude })
             console.log('User position is:', pos);
             document.querySelector('.user-pos').innerText = 'Current location'
             mapService.panTo(pos.coords.latitude,pos.coords.longitude)
@@ -101,17 +113,22 @@ function onPanTo() {
 }
 
 
-function renderLocs(){
+function renderLocs(shouldAddPointers = false){
   locService.getLocs().then(locs => {
     var strhtml = '';
     console.log('locs', locs)
     locs.forEach(loc => {
-        strhtml +=
-        `<div class="loc-container">
-            <div class="name">${loc.name}</div>
-            <button onclick="onGoLoc(${loc.lat} , ${loc.lng})" class="btn btn-light">GO</button>
-            <button onclick="onRemoveLoc()" class="btn btn-light">X</button>
-        </div>`
+      if (shouldAddPointers) {
+        mapService.addMarker({ lat:loc.lat, lng:loc.lng});
+      }
+      strhtml +=
+      `<div class="loc-container">
+          <div class="name">${loc.name}</div>
+          <div class="small-buttons">
+          <button onclick="onGoLoc(${loc.lat} , ${loc.lng})" class="btn btn-success">GO</button>
+          <button onclick="onRemoveLoc()" class="btn btn-danger">X</button>
+          </div>
+      </div>`
     });
     console.log(strhtml)
     document.querySelector('.saved-location-container').innerHTML = strhtml
